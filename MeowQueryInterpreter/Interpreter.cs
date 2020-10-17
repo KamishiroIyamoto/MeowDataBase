@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MeowQueryInterpreter
+﻿namespace MeowQueryInterpreter
 {
     internal static class Interpreter
     {
@@ -11,11 +9,23 @@ namespace MeowQueryInterpreter
         {
             if (args.Length < 0)
             {
-                Console.WriteLine(Help);
+                System.Console.WriteLine(Help);
             }
             else
             {
-                Console.WriteLine("Get arguments");
+                switch (args[0])
+                {
+                    case "-cl": 
+                        QueryHandler.ConsoleQueryHandler(); break;
+                    case "-fl":
+                        if (args.Length < 2)
+                            System.Console.WriteLine(Help);
+                        else
+                            QueryHandler.FileQueryHandler(args[1]); 
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
