@@ -2,7 +2,6 @@
 {
     internal static class Interpreter
     {
-        //Класс интерпретатора MDB
         private static string Help = "Help Field";
 
         public static void Main(string[] args)
