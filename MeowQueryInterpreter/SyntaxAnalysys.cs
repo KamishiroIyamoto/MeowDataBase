@@ -51,7 +51,7 @@ namespace MeowQueryInterpreter
                 for (int i = 1; i < Data.Length - 2; i++)
                     if (Data[i] == SpecialLexems.CommaSeparator) RCount++;
 
-                if (RCount == IdentificatorCount)
+                if (RCount == IdentificatorCount - 1)
                     return SpecialLexems.Data_Select;
             }
             else if (Data == SpecialLexems.All_Keyword)
