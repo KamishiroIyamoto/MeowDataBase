@@ -1,6 +1,6 @@
 ﻿namespace MeowQueryInterpreter
 {
-    internal static class Interpreter
+    public static class Interpreter
     {
         private static string Help = "Help Field";
 
