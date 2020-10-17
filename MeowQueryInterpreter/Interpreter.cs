@@ -10,22 +10,6 @@
             {
                 System.Console.WriteLine(Help);
             }
-            else
-            {
-                switch (args[0])
-                {
-                    case "-cl": 
-                        QueryHandler.ConsoleQueryHandler(); break;
-                    case "-fl":
-                        if (args.Length < 2)
-                            System.Console.WriteLine(Help);
-                        else
-                            QueryHandler.FileQueryHandler(args[1]); 
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
     }
 }
