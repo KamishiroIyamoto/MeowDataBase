@@ -2,14 +2,18 @@
 {
     public static class Interpreter
     {
-        private static string Help = "Help Field";
+        readonly static string Help = "Help Field";
 
         public static void Main(string[] args)
         {
-            if (args.Length < 0)
-            {
-                System.Console.WriteLine(Help);
-            }
+            SyntaxAnalysys.Analysys("Take $[5] [word, int] From db.mdb");
+            SyntaxAnalysys.Analysys("Take $[5][word, int] From db.mdb");
+            SyntaxAnalysys.Analysys("Take [word, int] From db.mdb");
+            SyntaxAnalysys.Analysys("Record [\"hello\", 24] To db.mdb");
+            SyntaxAnalysys.Analysys("Record [\"hello\", 24,] To db.mdb");
+            SyntaxAnalysys.Analysys("Record [\"hello\", 24] To db.mb");
+            SyntaxAnalysys.Analysys("Take [\"hello\", 24,] To db.mb");
+            SyntaxAnalysys.Analysys("Take [\"hello\", 24] To db.mdb");
         }
     }
 }

@@ -16,10 +16,14 @@
         public static string Data_Select    { get; private set; } = "Data_Select";
         public static string All_Select     { get; private set; } = "All_Select";
         public static string All_Keyword    { get; private set; } = "ALL";
+        public static string DataBaseName   { get; private set; } = "DataBaseName";
+
 
         public static char   ID_Operator    { get; private set; } = '$';
         public static char   CommaSeparator { get; private set; } = ',';
         public static char   LBSeparator    { get; private set; } = '[';
         public static char   RBSeparator    { get; private set; } = ']';
+
+        public static string CorrectSyntax  { get; private set; } = "CorrectSyntax";
     }
 }

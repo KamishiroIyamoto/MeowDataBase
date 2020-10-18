@@ -8,28 +8,40 @@ namespace MeowQueryInterpreter
         /// <returns>Массив лексем</returns>
         private static string[] TokenBuilder(string CodeLine)
         {
-            if (CodeLine.Length == 0)
-                return new string[] {};
-
             List<string> Tokens = new List<string>();
+
             string Temp = "";
-            foreach (char Symbol in CodeLine)
+            for (int i = 0; i < CodeLine.Length; i ++)
             {
-                if (Symbol == ' ' && Temp != "")
+                if (CodeLine[i] == SpecialLexems.ID_Operator && Temp == "")
                 {
+                    for (; i < CodeLine.Length && CodeLine[i] != SpecialLexems.RBSeparator; i++)
+                        if (CodeLine[i] != ' ')
+                            Temp += CodeLine[i];
+                    Temp += SpecialLexems.RBSeparator;
                     Tokens.Add(Temp);
                     Temp = "";
                 }
-                else if (Symbol == ' ' && Temp == "")
-                    continue;
-                else if (Symbol == '\t')
-                    continue;
+                else if (CodeLine[i] == SpecialLexems.LBSeparator && Temp == "")
+                {
+                    for (; i < CodeLine.Length && CodeLine[i] != SpecialLexems.RBSeparator; i++)
+                        if (CodeLine[i] != ' ')
+                            Temp += CodeLine[i];
+                    Temp += SpecialLexems.RBSeparator;
+                    Tokens.Add(Temp);
+                    Temp = "";
+                }
+                else if (CodeLine[i] == ' ')
+                {
+                    Tokens.Add(Temp); 
+                    Temp = "";
+                }
                 else
-                    Temp += Symbol;
+                    Temp += CodeLine[i];
             }
             Tokens.Add(Temp);
 
-            bool Check(string str) => str == "" || str == " ";
+            static bool Check(string String) => String == "" || String == " ";
             System.Predicate<string> Predicate = Check;
             Tokens.RemoveAll(Predicate);
 
@@ -37,27 +49,86 @@ namespace MeowQueryInterpreter
         }
 
         /// <summary>
-        /// Анализатор запрашиваемых данных
+        /// Анализатор запроса
         /// </summary>
-        /// <returns>Вид лексемы</returns>
-        private static string SelectDataAnalysys(string Data)
+        /// <returns>Код состояния</returns>
+        private static string CodeLineAnalysys(string[] CodeLineTokens)
         {
-            if (Data[0] == SpecialLexems.ID_Operator)
-                return SpecialLexems.ID_Select;
-            else if (Data[0] == SpecialLexems.LBSeparator && Data[Data.Length - 1] == SpecialLexems.RBSeparator)
+            List<string> CodeLinePattern = new List<string>();
+
+            foreach (string Token in CodeLineTokens)
             {
+                if (Token == SpecialLexems.SelectOperator)
+                    CodeLinePattern.Add(SpecialLexems.SelectOperator);
+                else if (Token == SpecialLexems.RecordOperator)
+                    CodeLinePattern.Add(SpecialLexems.RecordOperator);
+                else if (Token == SpecialLexems.PickUpKeyword)
+                    CodeLinePattern.Add(SpecialLexems.PickUpKeyword);
+                else if (Token == SpecialLexems.WriteKeyword)
+                    CodeLinePattern.Add(SpecialLexems.WriteKeyword);
+                else if (Token[0] == SpecialLexems.ID_Operator)
+                    CodeLinePattern.Add(SpecialLexems.ID_Select);
+                else if (Token[0] == SpecialLexems.LBSeparator && Token[^1] == SpecialLexems.RBSeparator)
+                {
+                    static int IdentificatorsCount(string CodeLine)
+                    {
+                        string[] Temp = CodeLine.Split(' ');
+                        string TempStr = "";
+                        foreach (string T in Temp)
+                            TempStr += T;
 
-                int RCount = 0, IdentificatorCount = TokenBuilder(Data.Substring(1, Data.Length - 1)).Length;
-                for (int i = 1; i < Data.Length - 2; i++)
-                    if (Data[i] == SpecialLexems.CommaSeparator) RCount++;
+                        List<string> Id = new List<string>(TempStr.Split(','));
+                        static bool Check(string String) => String == "" || String == " ";
+                        System.Predicate<string> Predicate = Check;
+                        Id.RemoveAll(Predicate);
+                        return Id.Count;
+                    }
 
-                if (RCount == IdentificatorCount)
-                    return SpecialLexems.Data_Select;
+                    static int CommaCount(string CodeLine)
+                    {
+                        int Count = 0;
+                        foreach (char Ch in CodeLine)
+                            if (Ch == ',')
+                                Count++;
+                        return Count;
+                    }
+
+                    if (CommaCount(Token[1..^1]) == IdentificatorsCount(Token[1..^1]) - 1)
+                        CodeLinePattern.Add(SpecialLexems.Data_Select);
+                    else
+                        return Errors.FormatError;
+                }
+                else if (Token.Length >= 5 && Token[^4..^0] == ".mdb")
+                    CodeLinePattern.Add(SpecialLexems.DataBaseName);
+                else
+                    return Errors.FormatError;
             }
-            else if (Data == SpecialLexems.All_Keyword)
-                return SpecialLexems.All_Select;
 
-            return Errors.FormatError;
+            if (CodeLinePattern.Count == 5)
+            {
+                for (int i = 0; i < 5; i++)
+                    if (CodeLinePattern[i] != LexemPatterns.ID_Selector[i])
+                        return Errors.SyntaxError;
+                return SpecialLexems.CorrectSyntax;
+            }
+            else if (CodeLinePattern.Count == 4)
+            {
+                if (CodeLinePattern[0] == SpecialLexems.SelectOperator)
+                {
+                    for (int i = 0; i < 4; i++)
+                        if (CodeLinePattern[i] != LexemPatterns.Field_Selector[i])
+                            return Errors.SyntaxError;
+                    return SpecialLexems.CorrectSyntax;
+                }
+                else if (CodeLinePattern[0] == SpecialLexems.RecordOperator)
+                {
+                    for (int i = 0; i < 4; i++)
+                        if (CodeLinePattern[i] != LexemPatterns.Field_Record[i])
+                            return Errors.SyntaxError;
+                    return SpecialLexems.CorrectSyntax;
+                }
+            }
+            return Errors.SyntaxError;
         }
 
         /// <summary>
@@ -65,8 +136,7 @@ namespace MeowQueryInterpreter
         /// </summary>
         public static void Analysys(string CodeLine)
         {
-            string[] Tokens = TokenBuilder(CodeLine);
-            if (Tokens.Length < 4) return;
+            System.Console.WriteLine(CodeLineAnalysys(TokenBuilder(CodeLine)));
         }
     }
 }
