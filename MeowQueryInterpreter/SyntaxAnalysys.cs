@@ -84,7 +84,6 @@ namespace MeowQueryInterpreter
                         return Id.Count;
                     }
 
-<<<<<<< HEAD
                     static int CommaCount(string CodeLine)
                     {
                         int Count = 0;
@@ -103,10 +102,6 @@ namespace MeowQueryInterpreter
                     CodeLinePattern.Add(SpecialLexems.DataBaseName);
                 else
                     return Errors.FormatError;
-=======
-                if (RCount == IdentificatorCount - 1)
-                    return SpecialLexems.Data_Select;
->>>>>>> c6527ec91eee40e089cd9f29abb4eba989731b93
             }
 
             if (CodeLinePattern.Count == 5)
