@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "MeowQueryInterpreter/1.0.0": {
+        "runtime": {
+          "MeowQueryInterpreter.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MeowQueryInterpreter/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,103 @@
+Если мы хотим совершить запрос из определенной базы данных, то мы можем 
+воспользоваться декларативным языком MQI (MeowQueryInterpreter).
+
+Синтаксис запроса данных:
+    Take [NAME_OF_DATA] From [NAME].mdb
+    Take [NAME_OF_DATA1, NAME_OF_DATA2, ..., NAME_OF_DATA_N] From [NAME].mdb
+    Take ALL From [NAME].mdb
+    Take $N From [NAME].mdb
+
+Пример:
+    Имеется база данных. Файл WordsAndNumbers.mdb выглядит следующим образом:
+    +-------------------------------------------------------------+
+    |    { KEY: NULL, FORMAT: [String: Word, Integer: Number] }   |
+    |                                                             |
+    |    [$1, "RRR", 567]                                         |
+    |    [$2, "FFF", 123]                                         |
+    |    [$3, "TTT", 245]                                         |
+    |    [$4, "VVV", 189]                                         |
+    |    [$5, "CCC", 623]                                         |
+    |    [$6, "XXX", 183]                                         |
+    |                                                             |
+    +-------------------------------------------------------------+
+
+    MQI на запрос: Take Word From WordsAndNumbers.mdb, выдаст:
+            Word
+        1: "RRR"
+        2: "FFF"
+        3: "TTT"
+        4: "VVV"
+        5: "CCC"
+        6: "XXX"
+    
+    MQI на запрос: Take [Word, Number] From WordsAndNumbers.mdb, выдаст:
+            Word    Number  
+        1: "RRR"    567                                         
+        2: "FFF"    123                                         
+        3: "TTT"    245                                         
+        4: "VVV"    189                                         
+        5: "CCC"    623                                         
+        6: "XXX"    183
+
+    MQI на запрос: Take ALL From WordsAndNumbers.mdb, выдаст:
+            Word    Number  
+        1: "RRR"    567                                         
+        2: "FFF"    123                                         
+        3: "TTT"    245                                         
+        4: "VVV"    189                                         
+        5: "CCC"    623                                         
+        6: "XXX"    183
+    
+    MQI на запрос: Take $4 From WordsAndNumbers.mdb, выдаст:
+            Word    Number                                          
+        4: "VVV"    189                                         
+
+
+
+Синтаксис записи данных:
+    Record [NAME_OF_DATA1, NAME_OF_DATA2, ..., NAME_OF_DATA3] To [NAME].mdb
+    Record [$N, NAME_OF_DATA1: NEW_DATA1, NAME_OF_DATA2: NEW_DAT2, ... , NAME_OF_DATA_N: NEW_DATA_N] To [NAME].mdb
+
+Пример:
+    Имеется база данных. Файл WordsAndNumbers.mdb выглядит следующим образом:
+        +-------------------------------------------------------------+
+        |    { KEY: NULL, FORMAT: [String: Word, Integer: Number] }   |
+        |                                                             |
+        |    [$1, "RRR", 567]                                         |
+        |    [$2, "FFF", 123]                                         |
+        |    [$3, "TTT", 245]                                         |
+        |    [$4, "VVV", 189]                                         |
+        |    [$5, "CCC", 623]                                         |
+        |    [$6, "XXX", 183]                                         |
+        |                                                             |
+        +-------------------------------------------------------------+
+
+    После выполнения записи: Record ["Hello", 678] To WordsAndNumbers.mdb, база данных будет выглядеть следующим образом:
+        +-------------------------------------------------------------+
+        |    { KEY: NULL, FORMAT: [String: Word, Integer: Number] }   |
+        |                                                             |
+        |    [$1, "RRR", 567]                                         |
+        |    [$2, "FFF", 123]                                         |
+        |    [$3, "TTT", 245]                                         |
+        |    [$4, "VVV", 189]                                         |
+        |    [$5, "CCC", 623]                                         |
+        |    [$6, "XXX", 183]                                         |
+        |    [$7, "Hello", 678]                                       |
+        |                                                             |
+        +-------------------------------------------------------------+
+
+    После выполнения записи: Record [$7, Word: "World", Number: 0] To WordsAndNumbers.mdb, база данных будет выглядеть следующим образом:
+        +-------------------------------------------------------------+
+        |    { KEY: NULL, FORMAT: [String: Word, Integer: Number] }   |
+        |                                                             |
+        |    [$1, "RRR", 567]                                         |
+        |    [$2, "FFF", 123]                                         |
+        |    [$3, "TTT", 245]                                         |
+        |    [$4, "VVV", 189]                                         |
+        |    [$5, "CCC", 623]                                         |
+        |    [$6, "XXX", 183]                                         |
+        |    [$7, "World", 0]                                         |
+        |                                                             |
+        +-------------------------------------------------------------+
+
+Синтаксис MQI будет постепенно рости

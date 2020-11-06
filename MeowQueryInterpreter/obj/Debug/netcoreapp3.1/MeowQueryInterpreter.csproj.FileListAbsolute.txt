@@ -1,0 +1,13 @@
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\bin\Debug\netcoreapp3.1\MeowQueryInterpreter.exe
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\bin\Debug\netcoreapp3.1\MeowQueryInterpreter.deps.json
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\bin\Debug\netcoreapp3.1\MeowQueryInterpreter.runtimeconfig.json
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\bin\Debug\netcoreapp3.1\MeowQueryInterpreter.runtimeconfig.dev.json
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\bin\Debug\netcoreapp3.1\MeowQueryInterpreter.dll
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\bin\Debug\netcoreapp3.1\MeowQueryInterpreter.pdb
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\obj\Debug\netcoreapp3.1\MeowQueryInterpreter.csprojAssemblyReference.cache
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\obj\Debug\netcoreapp3.1\MeowQueryInterpreter.AssemblyInfoInputs.cache
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\obj\Debug\netcoreapp3.1\MeowQueryInterpreter.AssemblyInfo.cs
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\obj\Debug\netcoreapp3.1\MeowQueryInterpreter.csproj.CoreCompileInputs.cache
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\obj\Debug\netcoreapp3.1\MeowQueryInterpreter.dll
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\obj\Debug\netcoreapp3.1\MeowQueryInterpreter.pdb
+C:\Users\Home-PC\Desktop\MeowDataBase\MeowQueryInterpreter\obj\Debug\netcoreapp3.1\MeowQueryInterpreter.genruntimeconfig.cache
